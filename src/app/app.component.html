@@ -11,7 +11,7 @@
       <ul class="list-group" *ngIf="tasks">
         <li class="list-group-item"
             *ngFor="let task of tasks | sort" [ngClass]="{'list-group-item-info' : (selected && selected.id == task.id) || (postponed &&  postponed.id == task.id), 'white': (!selected && !postponed) || (selected && selected.id != task.id) || (postponed && postponed.id != task.id)}">
-         {{task.title}} | {{task.dueDate | date:'dd-MM-yyyy' }} | {{task.priority}}
+         {{task.title}} | {{task.dueDate | date:'dd-MM-yyyy' }} | Prio: {{task.priority}}
           <span style="float:right;"><button type="button" class="btn btn-success" (click)="selectTask(task)">Details</button>
           <button type="button" class="btn" (click)="toPostpone(task)">Postpone</button></span>
         </li>

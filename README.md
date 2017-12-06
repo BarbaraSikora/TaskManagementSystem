@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Getting Started
 
-* Fork Repository or Download
+* Fork repository or Download
 * `npm install` for loading node_modules
 * open http://localhost:4200/ in your browser
 * `npm start` for starting dev server
@@ -17,7 +17,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 * tasks can be postponed to a later date or removed
 * clearStorage removes all tasks from list
 * after clearStorage, only random tasks can be added again
-* for dummy tasks, reload page
+* for getting dummy tasks again, reload page
 
 ## Development server
 
