@@ -2,6 +2,23 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.5.
 
+## Getting Started
+
+* Fork Repository or Download
+* `npm install` for loading node_modules
+* open http://localhost:4200/ in your browser
+* `npm start` for starting dev server
+
+## What can be done?
+
+* initial start loads dummy tasks
+* tasks can be edited and saved in the Detail View
+* random tasks can be created with random date
+* tasks can be postponed to a later date or removed
+* clearStorage removes all tasks from list
+* after clearStorage, only random tasks can be added again
+* for dummy tasks, reload page
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
