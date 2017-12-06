@@ -1,8 +1,82 @@
-<!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
   <h1>
-    Welcome to {{ title }}!
+    {{ title }}
   </h1>
 </div>
+
+<section class="container" style="margin-top:40px;">
+  <div class="row">
+    <div class="col-sm-6">
+      <h2>Tasks</h2>
+      <ul class="list-group" *ngIf="tasks">
+        <li class="list-group-item"
+            *ngFor="let task of tasks | sort" [ngClass]="{'list-group-item-info' : (selected && selected.id == task.id) || (postponed &&  postponed.id == task.id), 'white': (!selected && !postponed) || (selected && selected.id != task.id) || (postponed && postponed.id != task.id)}">
+         {{task.title}} | {{task.dueDate | date:'dd-MM-yyyy' }} | {{task.priority}}
+          <span style="float:right;"><button type="button" class="btn btn-success" (click)="selectTask(task)">Details</button>
+          <button type="button" class="btn" (click)="toPostpone(task)">Postpone</button></span>
+        </li>
+      </ul>
+      <br>
+      <button class="btn btn-info" type="button" (click)="addRandomTask()">Add Random Task</button>
+      <button class="btn btn-danger" type="button" (click)="cleanStorage()">Clean Storage</button>
+    </div>
+    <div *ngIf="selected" class="col-sm-5">
+      <h2>Detailed View</h2> <div *ngIf="saved" class="alert alert-success">Saved</div>
+      <form (ngSubmit)="onSave()" #taskForm="ngForm">
+        <div class="form-group">
+          <label for="task-title">Title:</label>
+          <input id="task-title" class="task-title form-control" name="title"  [(ngModel)]="selected.title"  #title="ngModel" required>
+          <div [hidden]="title.valid" class="form-error">Field is required</div>
+        </div>
+        <div class="form-group">
+          <label for="task-description">Description:</label>
+          <textarea id="task-description" class="task-description form-control" name="description" [(ngModel)]="selected.description"  #description="ngModel" required></textarea>
+          <div [hidden]="description.valid" class="form-error">Field is required</div>
+        </div>
+        <div class="form-group">
+          <label for="task-dueDate">DueDate:</label>
+          <input id="task-dueDate" type="date" class="task-dueDate" name="dueDate" [ngModel]="selected.dueDate | date:'yyyy-MM-dd'"  (ngModelChange)="selected.dueDate = $event"  #dueDate="ngModel" required>
+          <div [hidden]="dueDate.valid" class="form-error">Field is required</div>
+        </div>
+        <div class="form-group">
+          <label for="task-resolvedAt">ResolvedAt:</label>
+          <input id="task-resolvedAt" type="date" class="task-resolvedAt" name="resolvedAt"  [ngModel]="selected.resolvedAt | date:'yyyy-MM-dd'" (ngModelChange)="selected.resolvedAt = $event"  #resolvedAt="ngModel" required>
+          <div [hidden]="resolvedAt.valid" class="form-error">Field is required</div>
+        </div>
+        <div class="form-group">
+          <label for="task-prio">Prio:</label>
+          <input id="task-prio" type="number" class="task-prio" name="prio" [(ngModel)]="selected.priority"  #priority="ngModel" required>
+          <div [hidden]="priority.valid" class="form-error">Field is required</div>
+        </div>
+        <div class="form-group">
+          <label for="task-status">Status:</label>
+          <input id="task-status" class="task-status" name="status" [(ngModel)]="selected.status"  #status="ngModel" required>
+          <div [hidden]="status.valid" class="form-error">Field is required</div>
+        </div>
+        <div>
+          <button class="btn btn-success task-save">Save</button>
+          <button class="btn btn-outline-secondary" (click)="closeDetailView()">Close</button>
+        </div>
+      </form>
+    </div>
+    <div *ngIf="postponed" class="col-sm-5 list-group" style="margin-top:45px;">
+      <div class="alert alert-danger">Do you want to remove the task or postpone it?</div>
+      <button class="btn btn-danger" (click)="removeTask()" *ngIf="!postpone">Remove</button>
+      <button class="btn" (click)="postpone = true">Postpone</button>
+      <button class="btn btn-outline-secondary" (click)="closePostpone()" *ngIf="!postpone">Close</button>
+      <form (ngSubmit)="postponeTask()" *ngIf="postpone" #taskForm="ngForm" style="margin-top:20px;">
+        <div class="form-group">
+          <label for="task-dueDate">DueDate:</label>
+          <input type="date" class="task-dueDate" name="dueDate" [ngModel]="postponed.dueDate | date:'yyyy-MM-dd'"  (ngModelChange)="postponed.dueDate = $event"  #dueDate="ngModel" required>
+          <div [hidden]="dueDate.valid" class="form-error">Field is required</div>
+          <button class="btn btn-success task-save">Save</button>
+          <button class="btn btn-primary" (click)="postpone = false">Return</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+
 
 
