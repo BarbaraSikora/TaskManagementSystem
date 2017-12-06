@@ -23,11 +23,9 @@ export class AppComponent {
   constructor(private service: TasksService) {}
 
   ngOnInit(){
-
    this.service.getTasks().subscribe((tasks) => {
      if(tasks !== null){                        // tasks found in localStorage
        this.tasks = tasks;
-
      }else{
        this.service.setTasks();                 // no tasks in localStorage
        this.service.setID();
@@ -36,12 +34,12 @@ export class AppComponent {
    }, () => {});
   }
 
-
   selectTask(task){
-    this.selected = Object.assign({}, task);    // avoids changing original object
+    this.selected = Object.assign({}, task);    // prevent changing original object
     this.saved = false;
     this.closePostpone();
   }
+
 
   onSave(){
     this.submitted = true;
@@ -69,20 +67,15 @@ export class AppComponent {
     });
   }
 
-  generateRandomDate(){
-    let randomYear = Math.floor((Math.random() * (2018 - 2017 + 1)) + 2017);
-    let randomMonth = Math.floor((Math.random() * 12) + 1);
-    let randomDay = Math.floor((Math.random() * 31) + 1);
-
-    return  randomYear+"-"+randomMonth+"-"+randomDay;
-  }
-
   addRandomTask(){
     let dueDate = this.generateRandomDate();
     let resolvedAt = this.generateRandomDate();
     let randomPrio = Math.floor((Math.random() * 20) + 1);
 
    this.service.getID().subscribe((id) => {
+     if(id == null){
+       id = 0;
+     }
      this.actualID = id;
 
      let task = {
@@ -99,21 +92,15 @@ export class AppComponent {
      this.service.getTasks().subscribe((tasks) => {
           if(tasks !== null){
             tasks.push(task);
-            this.service.updateTasks(tasks).subscribe(() => {
-              this.tasks = tasks;
-            }, () => {});
+          }else{
+            tasks = [];
+            tasks.push(task);
           }
+       this.service.updateTasks(tasks).subscribe(() => {
+         this.tasks = tasks;
+       }, () => {});
       }, () => {});
    }, () => {});
-  }
-
-
-  closeDetailView(){
-    this.selected = null;
-  }
-
-  closePostpone(){
-    this.postponed = null;
   }
 
   toPostpone(task){
@@ -148,5 +135,20 @@ export class AppComponent {
   }
 
 
+  closeDetailView(){
+    this.selected = null;
+  }
+
+  closePostpone(){
+    this.postponed = null;
+  }
+
+  generateRandomDate(){
+    let randomYear = Math.floor((Math.random() * (2018 - 2017 + 1)) + 2017);
+    let randomMonth = Math.floor((Math.random() * 12) + 1);
+    let randomDay = Math.floor((Math.random() * 31) + 1);
+
+    return  randomYear+"-"+randomMonth+"-"+randomDay;
+  }
 
 }

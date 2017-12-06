@@ -3,7 +3,7 @@ let Tasks = [
         id : 0,
         dueDate : new Date('2017-05-18'),
         resolvedAt : new Date('2017-05-18'),
-        title : "Angular",
+        title : "Angular Setup",
         description : "Something",
         priority : 12,
         status : "in work"
@@ -12,7 +12,7 @@ let Tasks = [
         id : 1,
         dueDate : new Date('2017-05-18'),
         resolvedAt : new Date('2017-05-18'),
-        title : "Git Repository",
+        title : "Git Repo Setup",
         description : "Something",
         priority : 2,
         status : "to do"
@@ -21,7 +21,7 @@ let Tasks = [
         id : 2,
         dueDate : new Date('2017-02-11'),
         resolvedAt : new Date('2017-02-21'),
-        title : "Docker",
+        title : "Docker Testing",
         description : "Something",
         priority : 6,
         status : "not done"
@@ -33,7 +33,7 @@ let Tasks = [
         title : "Cook Spaghetti",
         description : "Something",
         priority : 5,
-        status : "not done"
+        status : "done"
     },
     {
         id : 4,
