@@ -13,9 +13,9 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^8.0.0",
-    "@angular/common": "^5.2.11",
+    "@angular/common": "8.0.0",
     "@angular/compiler": "^8.0.0",
-    "@angular/core": "^5.2.11",
+    "@angular/core": "8.0.0",
     "@angular/forms": "^8.0.0",
     "@angular/platform-browser": "^8.0.0",
     "@angular/platform-browser-dynamic": "^8.0.0",
@@ -24,9 +24,10 @@
     "bootstrap": "^4.0.0-beta.2",
     "core-js": "^2.4.1",
     "jquery": "^3.4.1",
-    "rxjs": "^5.5.2",
+    "rxjs": "6.5.2",
     "tslib": "^1.9.0",
-    "zone.js": "~0.9.1"
+    "zone.js": "~0.9.1",
+    "popper.js": "^1.14.7"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.800.2",
@@ -48,6 +49,6 @@
     "protractor": "^6.0.0",
     "ts-node": "~3.2.0",
     "tslint": "~5.7.0",
-    "typescript": "^3.4.5"
+    "typescript": "3.5.1"
   }
 }
