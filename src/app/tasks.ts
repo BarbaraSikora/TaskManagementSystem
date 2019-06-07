@@ -1,4 +1,4 @@
-let Tasks = [
+export let Tasks = [
     {
         id : 0,
         dueDate : new Date('2017-05-18'),
@@ -55,5 +55,3 @@ let Tasks = [
     }
 
 ];
-
-export default Tasks;
