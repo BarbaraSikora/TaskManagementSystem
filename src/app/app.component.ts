@@ -22,11 +22,11 @@ export class AppComponent {
 
   constructor(private service: TasksService) {}
 
-  ngOnInit(){
+  ngOnInit() {
    this.service.getTasks().subscribe((tasks) => {
-     if(tasks !== null){                        // tasks found in localStorage
-       this.tasks = tasks;
-     }else{
+     if (tasks.value !== null) {                        // tasks found in localStorage
+       this.tasks = tasks.value;
+     } else {
        this.service.setTasks();                 // no tasks in localStorage
        this.service.setID();
        this.ngOnInit();
@@ -34,7 +34,7 @@ export class AppComponent {
    }, () => {});
   }
 
-  selectTask(task){
+  selectTask(task) {
     this.selected = Object.assign({}, task);    // prevent changing original object
     this.saved = false;
     this.closePostpone();

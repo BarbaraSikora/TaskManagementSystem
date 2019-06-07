@@ -4,7 +4,7 @@ import { TasksService } from './tasks.service';
 import { AppComponent } from './app.component';
 import { FormsModule }   from '@angular/forms';
 import  { ArraySortPipe }  from './sort.pipe';
-import { AsyncLocalStorageModule } from 'angular-async-local-storage';
+import { StorageModule    } from '@ngx-pwa/local-storage';
 
 
 @NgModule({
@@ -15,7 +15,9 @@ import { AsyncLocalStorageModule } from 'angular-async-local-storage';
   imports: [
     BrowserModule,
     FormsModule,
-    AsyncLocalStorageModule
+    StorageModule.forRoot({
+      IDBNoWrap: true,
+    })
   ],
   providers: [
       TasksService

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import  { Tasks } from './tasks';
-import { AsyncLocalStorage } from 'angular-async-local-storage';
+import Tasks from './tasks';
+import { LocalStorage } from '@ngx-pwa/local-storage';
 
 @Injectable()
 export class TasksService {
 
-    constructor(protected localStorage: AsyncLocalStorage) { }
+    constructor(protected localStorage: LocalStorage ) { }
 
     private tasks = Tasks;
 
@@ -41,7 +41,7 @@ export class TasksService {
     }
 
     //get all tasks from the localStorage
-    getTasks(): Observable<any>{
+    getTasks(): Observable<any> {
             return this.localStorage.getItem('tasks');
     }
 }
