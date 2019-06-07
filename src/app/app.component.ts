@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { Task } from './task';
-import { TasksService } from './tasks.service';
+import {Task} from './interfaces/task';
 
 @Component({
   selector: 'app-root',
@@ -10,145 +9,25 @@ import { TasksService } from './tasks.service';
 export class AppComponent {
 
   title = 'Task Management System';
-  selected: Task | {};
-  postponed: Task | {};
+  selectedTask: Task | {};
+  postponedTask: Task | {};
 
-  actualID;
-  submitted = false;
-  saved = false;
-  postpone = false;
-
-  tasks: Task[];
-
-  constructor(private service: TasksService) {}
-
-  ngOnInit() {
-   this.service.getTasks().subscribe((tasks) => {
-     if (tasks.value !== null) {                        // tasks found in localStorage
-       this.tasks = tasks.value;
-     } else {
-       this.service.setTasks();                 // no tasks in localStorage
-       this.service.setID();
-       this.ngOnInit();
-     }
-   }, () => {});
+  provideTaskToDetailsView(task: Task) {
+    this.selectedTask = task;
   }
 
-  selectTask(task) {
-    this.selected = Object.assign({}, task);    // prevent changing original object
-    this.saved = false;
-    this.closePostpone();
+  provideTaskToActionsView(task: Task) {
+    this.postponedTask = task;
   }
-
-
-  onSave(){
-    this.submitted = true;
-
-    this.selected['dueDate'] = new Date(this.selected['dueDate']);
-    this.selected['resolvedAt'] = new Date(this.selected['resolvedAt']);
-
-    this.service.getTasks().subscribe((tasks) => {
-      let key = tasks.findIndex(task => this.selected['id'] == task['id']);
-      tasks[key] = Object.assign({}, this.selected);
-
-      this.service.updateTasks(tasks).subscribe(() => {
-        this.tasks = tasks;
-        this.saved = true;
-      }, () => {});
-    }, () => {});
-  }
-
-  cleanStorage(){
-    this.service.clearStorage().subscribe(() => {
-      this.tasks = null;
-      this.actualID = null;
-      this.closeDetailView();
-      this.closePostpone();
-    });
-  }
-
-  addRandomTask(){
-    let dueDate = this.generateRandomDate();
-    let resolvedAt = this.generateRandomDate();
-    let randomPrio = Math.floor((Math.random() * 20) + 1);
-
-   this.service.getID().subscribe((id) => {
-     if(id == null){
-       id = 0;
-     }
-     this.actualID = id;
-
-     let task = {
-                    'id':this.actualID,
-                    'title':'Mock Title '+this.actualID,
-                    'description':'Mock Description',
-                    'dueDate':new Date(dueDate),
-                    'resolvedAt': new Date(resolvedAt),
-                    'priority':randomPrio,
-                    'status':'Mock Status'
-
-     };
-     this.service.updateID(this.actualID+1);
-     this.service.getTasks().subscribe((tasks) => {
-          if(tasks !== null){
-            tasks.push(task);
-          }else{
-            tasks = [];
-            tasks.push(task);
-          }
-       this.service.updateTasks(tasks).subscribe(() => {
-         this.tasks = tasks;
-       }, () => {});
-      }, () => {});
-   }, () => {});
-  }
-
-  toPostpone(task){
-    this.closeDetailView();
-    this.postponed = task;
-  }
-
-  removeTask(){
-    this.service.getTasks().subscribe((tasks) => {
-      let key = tasks.findIndex(task => this.postponed['id'] == task['id']);
-      tasks.splice(key,1);
-      this.service.updateTasks(tasks).subscribe(() => {
-        this.tasks = tasks;
-        this.closePostpone();
-      }, () => {});
-    }, () => {});
-  }
-
-  postponeTask(){
-    this.postponed['dueDate'] = new Date(this.postponed['dueDate']);
-
-    this.service.getTasks().subscribe((tasks) => {
-      let key = tasks.findIndex(task => this.postponed['id'] == task['id']);
-      tasks[key]['dueDate'] = this.postponed['dueDate'];
-      this.service.updateTasks(tasks).subscribe(() => {
-        this.tasks = tasks;
-        this.postpone = false;
-        console.log(tasks);
-        this.closePostpone();
-      }, () => {});
-    }, () => {});
-  }
-
 
   closeDetailView(){
-    this.selected = null;
+    this.selectedTask = null;
   }
 
-  closePostpone(){
-    this.postponed = null;
+  closeActionsView(){
+    this.postponedTask = null;
   }
 
-  generateRandomDate(){
-    let randomYear = Math.floor((Math.random() * (2018 - 2017 + 1)) + 2017);
-    let randomMonth = Math.floor((Math.random() * 12) + 1);
-    let randomDay = Math.floor((Math.random() * 31) + 1);
-
-    return  randomYear+"-"+randomMonth+"-"+randomDay;
+  ngOnInit() {
   }
-
 }

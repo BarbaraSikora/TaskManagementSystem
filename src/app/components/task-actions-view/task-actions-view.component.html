@@ -1,0 +1,15 @@
+<div *ngIf="postponed">
+  <div class="alert alert-danger">Do you want to remove the task or postpone it?</div>
+  <button class="btn btn-danger mr-2" (click)="removeTask()" *ngIf="!postpone">Remove</button>
+  <button class="btn mr-2" (click)="postpone = true">Postpone</button>
+  <button class="btn btn-outline-secondary mr-2" (click)="closePostpone()" *ngIf="!postpone">Close</button>
+  <form (ngSubmit)="postponeTask()" *ngIf="postpone" #taskForm="ngForm" style="margin-top:20px;">
+    <div class="form-group">
+      <label for="task-dueDate">DueDate:</label>
+      <input type="date" class="task-dueDate" name="dueDate" [ngModel]="postponed.dueDate | date:'yyyy-MM-dd'"  (ngModelChange)="postponed.dueDate = $event"  #dueDate="ngModel" required>
+      <div [hidden]="dueDate.valid" class="form-error">Field is required</div>
+      <button class="btn btn-success task-save">Save</button>
+      <button class="btn btn-primary" (click)="postpone = false">Return</button>
+    </div>
+  </form>
+</div>

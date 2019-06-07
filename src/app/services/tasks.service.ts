@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import Tasks from './tasks';
+import { Observable, Subject } from 'rxjs';
+import Tasks from '../data/tasks';
 import { LocalStorage } from '@ngx-pwa/local-storage';
 
 @Injectable()

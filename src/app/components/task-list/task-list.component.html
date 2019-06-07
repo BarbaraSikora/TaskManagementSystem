@@ -1,0 +1,12 @@
+<ul class="list-group" *ngIf="tasks">
+  <li class="list-group-item"
+      *ngFor="let task of tasks | sort" [ngClass]="{'list-group-item-info' : (selected && selected.id == task.id) || (postponed &&  postponed.id == task.id), 'white': (!selected && !postponed) || (selected && selected.id != task.id) || (postponed && postponed.id != task.id)}">
+    {{task.title}} | {{task.dueDate | date:'dd-MM-yyyy' }} | Prio: {{task.priority}}
+    <span style="float:right;"><button type="button" class="btn btn-success mr-2" (click)="selectTask(task)">Details</button>
+          <button type="button" class="btn" (click)="openActions(task)">Actions</button></span>
+  </li>
+</ul>
+<br>
+<button class="btn btn-info mr-2" type="button" (click)="addRandomTask()">Add Random Task</button>
+<button class="btn btn-danger mr-2" type="button" (click)="cleanStorage()">Clean Storage</button>
+<button class="btn btn-success" type="button" (click)="updateList()">Update List</button>
