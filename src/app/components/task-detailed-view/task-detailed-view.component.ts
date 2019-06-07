@@ -13,6 +13,7 @@ export class TaskDetailedViewComponent implements OnInit {
   @Input() selected: Task;
 
   @Output() closeTask: EventEmitter<null> = new EventEmitter();
+  @Output() saveTask: EventEmitter<null> = new EventEmitter();
 
   constructor(private service: TasksService) {}
 
@@ -37,6 +38,7 @@ export class TaskDetailedViewComponent implements OnInit {
 
       this.service.updateTasks(tasks).subscribe(() => {
         this.saved = true;
+        this.saveTask.emit();
       }, () => {});
     }, () => {});
   }

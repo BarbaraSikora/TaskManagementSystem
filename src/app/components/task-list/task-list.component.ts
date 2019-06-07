@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TasksService } from '../../services/tasks.service';
 import {Task} from '../../interfaces/task';
 
@@ -10,7 +10,9 @@ import {Task} from '../../interfaces/task';
 export class TaskListComponent implements OnInit {
   selected: Task | {};
   postponed: Task | {};
-  tasks: Task[];
+
+
+  @Input() tasks: Task[];
   actualID;
   saved = false;
 
@@ -22,7 +24,6 @@ export class TaskListComponent implements OnInit {
   constructor(private service: TasksService) {}
 
   ngOnInit() {
-    this.updateList();
   }
 
   addRandomTask(){
@@ -89,18 +90,6 @@ export class TaskListComponent implements OnInit {
     this.closeDetailView();
     this.postponed = task;
     this.openTaskActions.emit(this.postponed);
-  }
-
-  updateList() {
-    this.service.getTasks().subscribe((tasks) => {
-      if (tasks !== null) {                        // tasks found in localStorage
-        this.tasks = tasks;
-      } else {
-        this.service.setTasks();                 // no tasks in localStorage
-        this.service.setID();
-        this.ngOnInit();
-      }
-    }, () => {});
   }
 
   closeDetailView() {

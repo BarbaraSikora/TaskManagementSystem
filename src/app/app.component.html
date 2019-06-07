@@ -9,13 +9,14 @@
     <div class="col-sm-6">
       <h2>Tasks</h2>
       <app-task-list
+        [tasks]="taskList"
         (setTask)="provideTaskToDetailsView($event)"
         (openTaskActions)="provideTaskToActionsView($event)"
         (closeTask)="closeDetailView()"
         (closeTaskActions)="closeActionsView()"
       ></app-task-list>
     </div>
-    <app-task-detailed-view *ngIf="selectedTask" [selected]="selectedTask" (closeTask)="closeDetailView()" class="col-sm-5"></app-task-detailed-view>
+    <app-task-detailed-view *ngIf="selectedTask" [selected]="selectedTask" (closeTask)="closeDetailView()" (saveTask)="updateList()" class="col-sm-5"></app-task-detailed-view>
     <app-task-actions-view *ngIf="postponedTask" [postponed]="postponedTask" (closeTaskActions)="closeActionsView()" class="col-sm-5 list-group" style="margin-top:45px;"></app-task-actions-view>
   </div>
 </section>
